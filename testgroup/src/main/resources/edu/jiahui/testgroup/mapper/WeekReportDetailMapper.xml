@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.jiahui.testgroup.mapper.WeekReportDetailMapper" >
+  <resultMap id="BaseResultMap" type="edu.jiahui.testgroup.domain.WeekReportDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="system" property="system" jdbcType="VARCHAR" />
+    <result column="priority" property="priority" jdbcType="INTEGER" />
+    <result column="is_this_week" property="isThisWeek" jdbcType="TINYINT" />
+    <result column="report_id" property="reportId" jdbcType="INTEGER" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="job_content" property="jobContent" jdbcType="LONGVARCHAR" />
+    <result column="problem" property="problem" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, system, priority, is_this_week, report_id, created_by, updated_by, created_at,
+    updated_at,job_content, problem
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from week_report_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByReportId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List"/>
+    from week_report_detail
+    where report_id = #{reportId,jdbcType=INTEGER} and is_this_week=#{isThisWeek,jdbcType=INTEGER}
+    order by priority asc
+  </select>
+
+  <insert id="insert">
+    insert into
+    week_report_detail
+    (system,priority,job_content,problem,is_this_week,report_id,created_by,updated_by)
+    values
+    <foreach item="item" collection="list" separator=",">
+      (#{item.system},#{item.priority},#{item.jobContent},#{item.problem},#{item.isThisWeek},#{item.reportId},#{item.createdBy},#{item.updatedBy})
+    </foreach>
+  </insert>
+
+  <update id="update" parameterType="edu.jiahui.testgroup.domain.WeekReportDetail">
+    update week_report_detail
+    set system=#{system},priority=#{priority},job_content=#{jobContent},problem=#{problem},is_this_week=#{isThisWeek},updated_by=#{updatedBy}
+    where
+    id=#{id}
+  </update>
+
+  <delete id="deleteById" parameterType="java.lang.Integer">
+  delete from week_report_detail
+  where id=#{id}
+  </delete>
+
+  <delete id="deleteByReportId" parameterType="java.lang.Integer">
+    delete from week_report_detail
+    where report_id=#{reportId}
+  </delete>
+
+  <delete id="deleteNotIn">
+    delete from week_report_detail
+    where id not in
+    <foreach item="item" collection="list" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+    and report_id=#{reportId}
+  </delete>
+</mapper>

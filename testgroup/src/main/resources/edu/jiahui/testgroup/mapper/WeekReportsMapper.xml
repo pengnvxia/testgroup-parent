@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.jiahui.testgroup.mapper.WeekReportsMapper" >
+  <resultMap id="BaseResultMap" type="edu.jiahui.testgroup.domain.WeekReports" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="VARCHAR" />
+    <result column="end_time" property="endTime" jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, start_time, end_time, created_by, updated_by, created_at, updated_at
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from week_report
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByCondition" parameterType="edu.jiahui.testgroup.domain.request.SearchReportReq" resultType="edu.jiahui.testgroup.domain.response.SearchReportRes$WeekReport">
+    select
+    week_report.id as id,
+    week_report.start_time as startTime,
+    week_report.end_time as endTime,
+    users.username as createdBy
+    from week_report
+    left join
+    users
+    on week_report.created_by=users.id
+    <where>
+      <if test="startTime != null and startTime != ''">
+        week_report.start_time <![CDATA[>=]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        and week_report.end_time <![CDATA[<=]]> #{endTime}
+      </if>
+      <if test="userId != null and userId != ''">
+        and week_report.created_by=#{userId}
+      </if>
+    </where>
+    order by week_report.start_time desc,week_report.updated_at desc
+  </select>
+
+  <insert id="insert" parameterType="edu.jiahui.testgroup.domain.WeekReports" useGeneratedKeys="true" keyProperty="id">
+    insert into
+    week_report
+    (start_time,end_time,created_by)
+    values
+    (#{startTime},#{endTime},#{createdBy})
+  </insert>
+
+  <update id="update" parameterType="edu.jiahui.testgroup.domain.WeekReports">
+    update week_report
+    set
+    start_time=#{startTime},end_time=#{endTime},updated_by=#{updatedBy}
+    where
+    id=#{id}
+  </update>
+
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from week_report
+    where id=#{id}
+  </delete>
+</mapper>
