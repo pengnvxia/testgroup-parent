@@ -1,4 +1,4 @@
 service sshd start
 cd /opt
-java -Xmx1536m -Xms1536m -Xmn1024m -jar ./testgroup-0.0.1-SNAPSHOT.jar &
+java -Xmx1344m -Xms1344m -Xmn448m -Xss256k -jar ./testgroup-0.0.1-SNAPSHOT.jar &
 tail -f /etc/hosts

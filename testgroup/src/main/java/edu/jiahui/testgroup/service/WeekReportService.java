@@ -3,12 +3,14 @@ package edu.jiahui.testgroup.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import edu.jiahui.framework.threadlocal.ParameterThreadLocal;
+import edu.jiahui.testgroup.domain.UserRole;
 import edu.jiahui.testgroup.domain.WeekReportDetail;
 import edu.jiahui.testgroup.domain.WeekReports;
 import edu.jiahui.testgroup.domain.request.SearchReportReq;
 import edu.jiahui.testgroup.domain.request.WeekReportReq;
 import edu.jiahui.testgroup.domain.response.SearchReportRes;
 import edu.jiahui.testgroup.domain.response.WeekReportRes;
+import edu.jiahui.testgroup.mapper.UserRoleMapper;
 import edu.jiahui.testgroup.mapper.WeekReportDetailMapper;
 import edu.jiahui.testgroup.mapper.WeekReportsMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +29,9 @@ public class WeekReportService {
 
     @Resource
     private WeekReportDetailMapper weekReportDetailMapper;
+
+    @Resource
+    private UserRoleMapper userRoleMapper;
 
     public void addWeekReport(WeekReportReq req){
         WeekReports weekReports=WeekReports.builder()
@@ -180,6 +185,10 @@ public class WeekReportService {
     }
 
     public SearchReportRes searchWeekReport(SearchReportReq req){
+        UserRole userRole = userRoleMapper.selectByUserId(ParameterThreadLocal.getUid());
+        if(userRole.getRole()==0){
+            req.setUserId(Integer.valueOf(ParameterThreadLocal.getUid()));
+        }
         SearchReportRes res= new SearchReportRes();
         PageHelper.startPage(req.currentifPage(),req.sizeif());
         List<SearchReportRes.WeekReport> weekReportList= weekReportsMapper.selectByCondition(req);
