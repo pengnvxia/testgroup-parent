@@ -18,8 +18,6 @@
     </parent>
 
     <modules>
-        <module>testgroup-common</module>
-        <module>testgroup-rpc</module>
         <module>testgroup</module>
     </modules>
 
@@ -78,11 +76,6 @@
             <!--                <groupId>com.github.docker-java</groupId>-->
             <!--                <artifactId>docker-java-transport-httpclient5</artifactId>-->
             <!--            </dependency>-->
-            <dependency>
-                <groupId>edu.jiahui</groupId>
-                <artifactId>testgroup-common</artifactId>
-                <version>${project.release.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 

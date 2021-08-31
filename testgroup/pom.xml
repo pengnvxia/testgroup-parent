@@ -46,10 +46,6 @@
             <artifactId>consul-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>edu.jiahui</groupId>
-            <artifactId>testgroup-common</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.ecwid.consul</groupId>
             <artifactId>consul-api</artifactId>
             <version>1.4.2</version>
