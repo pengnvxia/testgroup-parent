@@ -47,7 +47,7 @@
         </dependency>
         <dependency>
             <groupId>edu.jiahui</groupId>
-            <artifactId>testcase-common</artifactId>
+            <artifactId>testgroup-common</artifactId>
         </dependency>
         <dependency>
             <groupId>com.ecwid.consul</groupId>
