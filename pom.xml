@@ -80,7 +80,7 @@
             <!--            </dependency>-->
             <dependency>
                 <groupId>edu.jiahui</groupId>
-                <artifactId>testcase-common</artifactId>
+                <artifactId>testgroup-common</artifactId>
                 <version>${project.release.version}</version>
             </dependency>
         </dependencies>
