@@ -28,4 +28,9 @@ public class UserService {
             return usersMapper.selectBySource(ParameterThreadLocal.getUid());
         }
     }
+
+    public Users gerUserInfo(){
+        Users users = usersMapper.selectById(ParameterThreadLocal.getUid().toString());
+        return users;
+    }
 }
