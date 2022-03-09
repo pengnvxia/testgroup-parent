@@ -36,7 +36,7 @@
         week_report.start_time <![CDATA[>=]]> #{startTime}
       </if>
       <if test="endTime != null and endTime != ''">
-        and week_report.end_time <![CDATA[<=]]> #{endTime}
+        and week_report.end_time <![CDATA[<=]]> #{ endTime }
       </if>
       <if test="userId != null and userId != ''">
         and week_report.created_by=#{userId}
